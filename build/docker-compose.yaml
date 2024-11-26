@@ -25,7 +25,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
-      interval: 300s
+      interval: 60s
       retries: 3
       start_period: 40s
       timeout: 30s
@@ -51,7 +51,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
-      interval: 300s
+      interval: 60s
       retries: 3
       start_period: 40s
       timeout: 30s
@@ -113,7 +113,7 @@ services:
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
-      interval: 300s
+      interval: 60s
       retries: 3
       start_period: 40s
       timeout: 30s
@@ -153,7 +153,7 @@ services:
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
-      interval: 300s
+      interval: 60s
       retries: 3
       start_period: 40s
       timeout: 30s
@@ -193,7 +193,7 @@ services:
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
-      interval: 300s
+      interval: 60s
       retries: 3
       start_period: 40s
       timeout: 30s
