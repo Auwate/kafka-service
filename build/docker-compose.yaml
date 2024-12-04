@@ -112,7 +112,7 @@ services:
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
-      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
+      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
       start_period: 40s
@@ -152,7 +152,7 @@ services:
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
-      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
+      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
       start_period: 40s
@@ -192,7 +192,7 @@ services:
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
     healthcheck:
-      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
+      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
       start_period: 40s
