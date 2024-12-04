@@ -1,0 +1,24 @@
+- name: Set up Kafka
+  hosts: localhost
+  tasks:
+
+    - name: Check if cURL is present
+      command: curl --version
+      register: curl_check
+      ignore_errors: true
+
+    - name: Assert that cURL is present
+      ansible.builtin.assert:
+        that:
+          - curl_check.rc == 0
+        msg: cURL is not installed.
+
+    - name: Get IP address
+      command: curl ifconfig.me
+      register: ip_addr
+
+    - name: Replace IP addresses in Kafka file
+      ansible.builtin.replace:
+        path: ../../../build/docker-compose.yaml
+        regexp: '\{IP_ADDR\}'
+        replace: '{{ ip_addr }}'
