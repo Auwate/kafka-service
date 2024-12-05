@@ -5,7 +5,7 @@ A event-streaming platform for brokering messages between applications
 
 ## 12/5/2024
 
-- Finalized setup_yaml playbook
+- Finalized setup_kafka playbook
 
 ## 12/4/2024
 
