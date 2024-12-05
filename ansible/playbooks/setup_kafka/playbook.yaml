@@ -21,4 +21,4 @@
       ansible.builtin.replace:
         path: ../../../build/docker-compose.yaml
         regexp: '\{IP_ADDR\}'
-        replace: '{{ ip_addr }}'
+        replace: '{{ ip_addr.stdout }}'
