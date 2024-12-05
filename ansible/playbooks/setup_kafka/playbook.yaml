@@ -22,3 +22,9 @@
         path: ../../../build/docker-compose.yaml
         regexp: '\{IP_ADDR\}'
         replace: '{{ ip_addr.stdout }}'
+
+    - name: Run Kafka
+      command: docker compose up -d
+      args:
+        chdir: ../../../build/
+      register: run_kafka
