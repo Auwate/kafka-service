@@ -60,6 +60,8 @@ services:
     restart: on-failure:3
     volumes:
       - controller-2-volume:/var/lib/kafka/data
+    depends_on:
+      - controller-1
 
   controller-3:
     image: apache/kafka:latest
@@ -86,6 +88,8 @@ services:
     restart: on-failure:3
     volumes:
       - controller-3-volume:/var/lib/kafka/data
+    depends_on:
+      - controller-2
 
   controller-4:
     image: apache/kafka:latest
@@ -112,6 +116,8 @@ services:
     restart: on-failure:3
     volumes:
       - controller-4-volume:/var/lib/kafka/data
+    depends_on:
+      - controller-3
 
   broker-1:
     image: apache/kafka:latest
