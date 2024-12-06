@@ -127,7 +127,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -159,6 +159,7 @@ services:
       - controller-1
       - controller-2
       - controller-3
+      - controller-4
     volumes:
       - broker-1-volume:/var/lib/kafka/data
 
@@ -177,7 +178,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -209,6 +210,7 @@ services:
       - controller-1
       - controller-2
       - controller-3
+      - controller-4
     volumes:
       - broker-2-volume:/var/lib/kafka/data
 
@@ -227,7 +229,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -259,6 +261,7 @@ services:
       - controller-1
       - controller-2
       - controller-3
+      - controller-4
     volumes:
       - broker-3-volume:/var/lib/kafka/data
 
@@ -277,7 +280,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -309,5 +312,6 @@ services:
       - controller-1
       - controller-2
       - controller-3
+      - controller-4
     volumes:
       - broker-4-volume:/var/lib/kafka/data
