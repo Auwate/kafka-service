@@ -1,0 +1,131 @@
+- name: Back-up data from all Kafka nodes
+  hosts: localhost
+  tasks:
+
+    - name: Ensure broker-1's directory is available
+      ansible.builtin.file:
+        path: /backups/broker_1
+        state: directory
+
+    - name: Ensure broker-2's directory is available
+      ansible.builtin.file:
+        path: /backups/broker_2
+        state: directory
+
+    - name: Ensure broker-3's directory is available
+      ansible.builtin.file:
+        path: /backups/broker_3
+        state: directory
+
+    - name: Ensure broker-4's directory is available
+      ansible.builtin.file:
+        path: /backups/broker_4
+        state: directory
+
+    - name: Ensure controller-1's directory is available
+      ansible.builtin.file:
+        path: /backups/controller_1
+        state: directory
+
+    - name: Ensure controller-2's directory is available
+      ansible.builtin.file:
+        path: /backups/controller_2
+        state: directory
+
+    - name: Ensure controller-3's directory is available
+      ansible.builtin.file:
+        path: /backups/controller_3
+        state: directory
+
+    - name: Ensure controller-4's directory is available
+      ansible.builtin.file:
+        path: /backups/controller-4
+        state: directory
+
+    - name: Stop broker-1
+      command: docker stop broker-1
+
+    - name: Copy broker-1's data
+      command: docker cp broker-1:/backups/broker_1
+      args:
+        chdir: /backups/broker_1
+
+    - name: Start broker-1
+      command: docker start broker-1
+
+    - name: Stop broker-2
+      command: docker stop broker-2
+
+    - name: Copy broker-2's data
+      command: docker cp broker-2:/backups/broker_2
+      args:
+        chdir: ../broker_2
+
+    - name: Start broker-2
+      command: docker start broker-2
+
+    - name: Stop broker-3
+      command: docker stop broker-3
+
+    - name: Copy broker-3's data
+      command: docker cp broker-3:/backups/broker_3
+      args:
+        chdir: ../broker_3
+
+    - name: Start broker-3
+      command: docker start broker-3
+
+    - name: Stop broker-4
+      command: docker stop broker-4
+
+    - name: Copy broker-4's data
+      command: docker cp broker-4:/backups/broker_4
+      args:
+        chdir: ../broker_4
+
+    - name: Start broker-4
+      command: docker start broker-4
+
+    - name: Stop controller-1
+      command: docker stop controller-1
+
+    - name: Copy controller-1's data
+      command: docker cp controller-3:/backups/controller_1
+      args:
+        chdir: ../controller-1
+
+    - name: Start controller-1
+      command: docker start controller-1
+
+    - name: Stop controller-2
+      command: docker stop controller-2
+
+    - name: Copy controller-2's data
+      command: docker cp controller-2:/backups/controller_2
+      args:
+        chdir: ../controller-2
+
+    - name: Start controller-2
+      command: docker start controller-2
+
+    - name: Stop controller-3
+      command: docker stop controller-3
+
+    - name: Copy controller-3's data
+      command: docker cp controller-3:/backups/controller_3
+      args:
+        chdir: ../controller-3
+
+    - name: Start controller-3
+      command: docker start controller-3
+
+    - name: Stop controller-4
+      command: docker stop controller-4
+
+    - name: Copy controller-4's data
+      command: docker cp controller-4:/backups/controller_4
+      args:
+        chdir: ../controller-4
+
+    - name: Start controller-4
+      command: docker start controller-4
