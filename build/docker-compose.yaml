@@ -6,6 +6,7 @@ volumes:
   broker-1-volume:
   broker-2-volume:
   broker-3-volume:
+  broker-4-volume:
 
 services:
   controller-1:
