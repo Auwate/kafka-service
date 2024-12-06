@@ -88,7 +88,7 @@ services:
 
   controller-4:
     image: apache/kafka:latest
-    container_name: controller-3
+    container_name: controller-4
     environment:
       KAFKA_NODE_ID: 4
       KAFKA_PROCESS_ROLES: controller
@@ -264,7 +264,7 @@ services:
 
   broker-4:
     image: apache/kafka:latest
-    container_name: broker-3
+    container_name: broker-4
     ports:
       - 49092:9092
     environment:
