@@ -6,8 +6,6 @@ An event-streaming platform for brokering messages between applications. Uses An
 
 This documentation is built for Unix operating systems. If you are using a Mac or Windows machine, much of the documentation may apply but dependency usage and installation may be different.
 
-## - Summary
-
 # Setup
 
 To setup the application, please clone this repository and following the following code. It's setup for the usage of `Ansible`.

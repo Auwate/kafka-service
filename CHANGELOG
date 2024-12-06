@@ -1,3 +1,13 @@
+# 12/6/2024
+
+- Added 2 new nodes
+    - Because of the issues regarding backing up when the node is active, the node will have to go down when backing up.
+    - This can cause the cluster to fail to at most 6 nodes, which is tolerant enough for most situations.
+- Added new configurations to docker-compose.yaml to improve fault tolerance and availability
+    - KAFKA_DEFAULT_REPLICATION_FACTOR - Sets the default replication for each topic
+    - KAFKA_MIN_INSYNC_REPLICAS - Sets the default minimum in-sync replicas to commit a write
+    - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR - Sets the default replication for each topic partitions offset
+
 # 12/5/2024
 
 - Updated README with documentation
