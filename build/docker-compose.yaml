@@ -3,15 +3,15 @@
 #   In addition, Kafka has application-level recovery strategies in place.
 
 # volumes:
-#   controller-1-volume:
-#   controller-2-volume:
-#   controller-3-volume:
-#   broker-1-volume:
-#   broker-2-volume:
-#   broker-3-volume:
-#   broker-4-volume:
-#   broker-5-volume:
-#   broker-6-volume:
+#   kafka_controller-1-volume:
+#   kafka_controller-2-volume:
+#   kafka_controller-3-volume:
+#   kafka_broker-1-volume:
+#   kafka_broker-2-volume:
+#   kafka_broker-3-volume:
+#   kafka_broker-4-volume:
+#   kafka_broker-5-volume:
+#   kafka_broker-6-volume:
 
 services:
   controller-1:
@@ -23,7 +23,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -38,7 +38,7 @@ services:
       timeout: 30s
     restart: on-failure:3
     #volumes:
-    #  - controller-1-volume:/var/lib/kafka/data
+    #  - kafka_controller-1-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -53,7 +53,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -68,9 +68,9 @@ services:
       timeout: 30s
     restart: on-failure:3
     #volumes:
-    #  - controller-2-volume:/var/lib/kafka/data
+    #  - kafka_controller-2-volume:/var/lib/kafka/data
     depends_on:
-      - controller-1
+      - kafka_controller-1
     deploy:
       placement:
         preferences:
@@ -85,7 +85,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -100,9 +100,9 @@ services:
       timeout: 30s
     restart: on-failure:3
     #volumes:
-    #  - controller-3-volume:/var/lib/kafka/data
+    #  - kafka_controller-3-volume:/var/lib/kafka/data
     depends_on:
-      - controller-2
+      - kafka_controller-2
     deploy:
       placement:
         preferences:
@@ -119,11 +119,11 @@ services:
       KAFKA_NODE_ID: 5
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-1:19092,PLAINTEXT_HOST://:29092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-1:19092,PLAINTEXT_HOST://:29092'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -152,11 +152,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-1-volume:/var/lib/kafka/data
+    #  - kafka_broker-1-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -173,11 +173,11 @@ services:
       KAFKA_NODE_ID: 6
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-2:19092,PLAINTEXT_HOST://:29093'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-2:19092,PLAINTEXT_HOST://:29093'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -206,11 +206,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-2-volume:/var/lib/kafka/data
+    #  - kafka_broker-2-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -227,11 +227,11 @@ services:
       KAFKA_NODE_ID: 7
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-3:19092,PLAINTEXT_HOST://:39092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-3:19092,PLAINTEXT_HOST://:39092'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -260,11 +260,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-3-volume:/var/lib/kafka/data
+    #  - kafka_broker-3-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -281,11 +281,11 @@ services:
       KAFKA_NODE_ID: 8
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:39093'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-4:19092,PLAINTEXT_HOST://:39093'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -314,11 +314,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-4-volume:/var/lib/kafka/data
+    #  - kafka_broker-4-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -335,11 +335,11 @@ services:
       KAFKA_NODE_ID: 9
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:49092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-5:19092,PLAINTEXT_HOST://:49092'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -368,11 +368,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-5-volume:/var/lib/kafka/data
+    #  - kafka_broker-5-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
@@ -389,11 +389,11 @@ services:
       KAFKA_NODE_ID: 10
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:49093'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka_broker-6:19092,PLAINTEXT_HOST://:49093'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka_controller-1:9093,2@kafka_controller-2:9093,3@kafka_controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -422,11 +422,11 @@ services:
 
     restart: on-failure:3
     depends_on:
-      - controller-1
-      - controller-2
-      - controller-3
+      - kafka_controller-1
+      - kafka_controller-2
+      - kafka_controller-3
     #volumes:
-    #  - broker-6-volume:/var/lib/kafka/data
+    #  - kafka_broker-6-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:

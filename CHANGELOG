@@ -6,6 +6,8 @@
           otherwise, they will be placed into what is available.
 - Moved requirements.txt to ansible directory
 - Added 2 new brokers and removed 1 controller for a total of 9 containers
+- Made all containers reference their respective counter-parts but with a "kafka_" prefix.
+    - Due to how stacks work in Docker swarm
 
 # 12/6/2024
 
