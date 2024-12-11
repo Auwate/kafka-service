@@ -1,10 +1,11 @@
 # 12/11/2024
 
 - Added Docker Swarm capabilities
-    - Specifically, the cluster will be split into 2 groups, where each node in the swarm will have a specific label
-        - In deploy.placement, we specify group1 and group2. If the VM with the label has it, they will be deployed there.
+    - Specifically, the cluster will be split into 3 groups, where each node in the swarm will have a specific label
+        - In deploy.placement, we specify group1, group2, and group3. If the VM with the label has it, they will be deployed there.
           otherwise, they will be placed into what is available.
 - Moved requirements.txt to ansible directory
+- Added 2 new brokers and removed 1 controller for a total of 9 containers
 
 # 12/6/2024
 

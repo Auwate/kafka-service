@@ -6,11 +6,12 @@
 #   controller-1-volume:
 #   controller-2-volume:
 #   controller-3-volume:
-#   controller-4-volume:
 #   broker-1-volume:
 #   broker-2-volume:
 #   broker-3-volume:
 #   broker-4-volume:
+#   broker-5-volume:
+#   broker-6-volume:
 
 services:
   controller-1:
@@ -22,7 +23,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -52,7 +53,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -73,7 +74,7 @@ services:
     deploy:
       placement:
         preferences:
-          - spread: node.labels.group1
+          - spread: node.labels.group2
 
   controller-3:
     image: apache/kafka:latest
@@ -84,7 +85,7 @@ services:
       KAFKA_LISTENERS: CONTROLLER://:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -105,39 +106,7 @@ services:
     deploy:
       placement:
         preferences:
-          - spread: node.labels.group2
-
-  controller-4:
-    image: apache/kafka:latest
-    container_name: controller-4
-    environment:
-      KAFKA_NODE_ID: 4
-      KAFKA_PROCESS_ROLES: controller
-      KAFKA_LISTENERS: CONTROLLER://:9093
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
-
-      # Mount location
-      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
-
-      # Consumer policies
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-    healthcheck:
-      test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
-      interval: 60s
-      retries: 3
-      start_period: 40s
-      timeout: 30s
-    restart: on-failure:3
-    #volumes:
-    #  - controller-4-volume:/var/lib/kafka/data
-    depends_on:
-      - controller-3
-    deploy:
-      placement:
-        preferences:
-          - spread: node.labels.group2
+          - spread: node.labels.group3
 
   broker-1:
     image: apache/kafka:latest
@@ -154,7 +123,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -163,7 +132,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
       # Retention policies
-      KAFKA_LOG_RETENTION_MS: 432000000  # 5 days in milliseconds
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
       KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
@@ -186,7 +155,6 @@ services:
       - controller-1
       - controller-2
       - controller-3
-      - controller-4
     #volumes:
     #  - broker-1-volume:/var/lib/kafka/data
     deploy:
@@ -198,18 +166,18 @@ services:
     image: apache/kafka:latest
     container_name: broker-2
     ports:
-      - 39092:9092
+      - 29093:9092
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 6
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-2:19092,PLAINTEXT_HOST://:39092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-2:19092,PLAINTEXT_HOST://:29093'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -218,7 +186,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
       # Retention policies
-      KAFKA_LOG_RETENTION_MS: 432000000  # 5 days in milliseconds
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
       KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
@@ -241,7 +209,6 @@ services:
       - controller-1
       - controller-2
       - controller-3
-      - controller-4
     #volumes:
     #  - broker-2-volume:/var/lib/kafka/data
     deploy:
@@ -253,18 +220,18 @@ services:
     image: apache/kafka:latest
     container_name: broker-3
     ports:
-      - 49092:9092
+      - 39092:9092
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 7
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-3:19092,PLAINTEXT_HOST://:49092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-3:19092,PLAINTEXT_HOST://:39092'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -273,7 +240,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
       # Retention policies
-      KAFKA_LOG_RETENTION_MS: 432000000  # 5 days in milliseconds
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
       KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
@@ -296,7 +263,6 @@ services:
       - controller-1
       - controller-2
       - controller-3
-      - controller-4
     #volumes:
     #  - broker-3-volume:/var/lib/kafka/data
     deploy:
@@ -308,18 +274,18 @@ services:
     image: apache/kafka:latest
     container_name: broker-4
     ports:
-      - 59092:9092
+      - 39093:9092
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 8
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:59092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:39093'
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093,4@controller-4:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
 
       # Mount location
       KAFKA_LOG_DIRS: '/var/lib/kafka/data'
@@ -328,7 +294,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
       # Retention policies
-      KAFKA_LOG_RETENTION_MS: 432000000  # 5 days in milliseconds
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
       KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
       KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
       KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
@@ -351,10 +317,117 @@ services:
       - controller-1
       - controller-2
       - controller-3
-      - controller-4
     #volumes:
     #  - broker-4-volume:/var/lib/kafka/data
     deploy:
       placement:
         preferences:
           - spread: node.labels.group2
+
+  broker-5:
+    image: apache/kafka:latest
+    container_name: broker-5
+    ports:
+      - 49092:9092
+    environment:
+
+      # Base configurations
+      KAFKA_NODE_ID: 9
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:49092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+
+      # Mount location
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
+
+      # Consumer policies
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Retention policies
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
+      KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
+      KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
+      KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
+
+      # Fault tolerance & High availability
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_MIN_INSYNC_REPLICAS: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
+    healthcheck:
+      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
+      interval: 60s
+      retries: 3
+      start_period: 40s
+      timeout: 30s
+
+    restart: on-failure:3
+    depends_on:
+      - controller-1
+      - controller-2
+      - controller-3
+    #volumes:
+    #  - broker-5-volume:/var/lib/kafka/data
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.group3
+
+  broker-6:
+    image: apache/kafka:latest
+    container_name: broker-6
+    ports:
+      - 49093:9092
+    environment:
+
+      # Base configurations
+      KAFKA_NODE_ID: 10
+      KAFKA_PROCESS_ROLES: broker
+      KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://:49093'
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller-1:9093,2@controller-2:9093,3@controller-3:9093
+
+      # Mount location
+      KAFKA_LOG_DIRS: '/var/lib/kafka/data'
+
+      # Consumer policies
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Retention policies
+      KAFKA_LOG_RETENTION_MS: 86400000  # 1 day in milliseconds
+      KAFKA_LOG_RETENTION_BYTES: 1073741824  # 1 GB
+      KAFKA_LOG_SEGMENT_BYTES: 524288000  # 500 MB
+      KAFKA_LOG_CLEANUP_POLICY_DELETE_RETENTION_MS: 3600000  # 1 hour
+
+      # Fault tolerance & High availability
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_MIN_INSYNC_REPLICAS: 2
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
+    healthcheck:
+      test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
+      interval: 60s
+      retries: 3
+      start_period: 40s
+      timeout: 30s
+
+    restart: on-failure:3
+    depends_on:
+      - controller-1
+      - controller-2
+      - controller-3
+    #volumes:
+    #  - broker-6-volume:/var/lib/kafka/data
+    deploy:
+      placement:
+        preferences:
+          - spread: node.labels.group3
