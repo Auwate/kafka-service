@@ -147,7 +147,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
@@ -201,7 +201,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
@@ -255,7 +255,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
@@ -309,7 +309,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
@@ -363,7 +363,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
@@ -417,7 +417,7 @@ services:
       test: ["CMD", "./opt/kafka/bin/kafka-topics.sh", "--bootstrap-server", "localhost:19092", "--list"]
       interval: 60s
       retries: 3
-      start_period: 40s
+      start_period: 120s
       timeout: 30s
 
     restart: on-failure:3
