@@ -1,30 +1,21 @@
 - name: Set up Kafka
-  hosts: localhost
+  hosts: webservers
   tasks:
 
-    - name: Check if cURL is present
-      command: curl --version
-      register: curl_check
-      ignore_errors: true
-
-    - name: Assert that cURL is present
-      ansible.builtin.assert:
-        that:
-          - curl_check.rc == 0
-        msg: cURL is not installed.
-
-    - name: Get IP address
-      command: curl ifconfig.me
-      register: ip_addr
-
-    - name: Replace IP addresses in Kafka file
+    - name: Replace HOST_1 in Kafka file
       ansible.builtin.replace:
         path: ../../../build/docker-compose.yaml
-        regexp: '\{IP_ADDR\}'
-        replace: '{{ ip_addr.stdout }}'
+        regexp: '\{HOST_1\}'
+        replace: '{{ hostvars["VM_1"]["ansible_host"] }}'
 
-    - name: Run Kafka
-      command: docker compose up -d
-      args:
-        chdir: ../../../build/
-      register: run_kafka
+    - name: Replace HOST_2 in Kafka file
+      ansible.builtin.replace:
+        path: ../../../build/docker-compose.yaml
+        regexp: '\{HOST_1\}'
+        replace: '{{ hostvars["VM_2"]["ansible_host"] }}'
+
+    - name: Replace HOST_3 in Kafka file
+      ansible.builtin.replace:
+        path: ../../../build/docker-compose.yaml
+        regexp: '\{HOST_1\}'
+        replace: '{{ hostvars["VM_3"]["ansible_host"] }}'

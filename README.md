@@ -2,9 +2,45 @@
 
 An event-streaming platform for brokering messages between applications. Uses Ansible to bootstrap setup so the service can easily be deployed on any VM with open ports.
 
+This service uses the following ports on each machine:
+
+- 29092 TCP - Kafka
+- 29093 TCP - Kafka
+- 39092 TCP - Kafka
+- 39093 TCP - Kafka
+- 49092 TCP - Kafka
+- 49093 TCP - Kafka
+- 2377 TCP - Docker Swarm (Overlay Network)
+- 7946 TCP - Docker Swarm (Discovery)
+- 4789 UDP - Docker Swarm (Ingress Network)
+
 ## - Disclaimer
 
 This documentation is built for Unix operating systems. If you are using a Mac or Windows machine, much of the documentation may apply but dependency usage and installation may be different.
+
+# Setup
+
+Currently the setup does not use `Ansible` for automation, although this may change with future iterations. Thus, the following is manual setup.
+
+## Starting the swarm
+
+Firstly to get the service ready, we need to have all three VMs up and running using `Docker Swarm`. This is a native tool provided by Docker to distribute the load across multiple machines, providing built-in load balancing, redeployment, and networking.
+
+To get started, please log into the first machine and run `docker swarm init`. This will return to you a token to which you will use in the next step.
+
+## Joining swarm on other VMs
+
+Next, go into the other VMs and run `docker swarm join --token <ENTER_TOKEN_HERE> <IP_ADDRESS_OF_VM>:2377`. Please insert the token where `<ENTER_TOKEN_HERE>` is and the IP address of the current VM in `<IP_ADDRESS_OF_VM>`
+
+Next, go back to the machine you initialized the swarm in and run `docker node promote <HOST_NAME_OR_NODE_ID>`, where you would put the host name or the ID of the node in `<HOST_NAME_OR_NODE_ID>`. This will promote each node into a hybrid, which essentially takes care of both managerial and labor-based tasks. You can find these attributes by running `docker node ls` in the first machine.
+
+## Deploying the stack
+
+After getting the swarm up and running, please clone the repository (if you haven't already) into any of the machines and move the current working directory into the `/build` section. Then, run `docker stack deploy -c docker-compose.yaml kafka`. This will launch the stack and deploy the containers across each VM.
+
+# OLD DOCUMENTATION
+
+Below is old documentation, specifically before the usage of Docker Swarm
 
 # Setup
 

@@ -1,0 +1,10 @@
+all:
+  children:
+    webservers:
+      hosts:
+        VM_1:
+          ansible_host: 67.17.206.202
+        VM_2:
+          ansible_host: 67.17.206.203
+        VM_3:
+          ansible_host: 67.17.206.222

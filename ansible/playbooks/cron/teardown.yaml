@@ -1,8 +1,0 @@
-- name: Teardown cron job
-  hosts: localhost
-  tasks:
-
-    - name: Teardown cron job
-      ansible.builtin.cron:
-        name: "Back-up all data on the Kafka cluster at 12:00AM every day"
-        state: absent
