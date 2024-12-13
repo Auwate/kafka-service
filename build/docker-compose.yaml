@@ -119,9 +119,6 @@ services:
       - network
 
   broker-1:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-1
     ports:
@@ -183,9 +180,6 @@ services:
       - network
 
   broker-2:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-2
     ports:
@@ -247,9 +241,6 @@ services:
       - network
 
   broker-3:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-3
     ports:
@@ -311,9 +302,6 @@ services:
       - network
 
   broker-4:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-4
     ports:
@@ -375,9 +363,6 @@ services:
       - network
 
   broker-5:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-5
     ports:
@@ -439,9 +424,6 @@ services:
       - network
 
   broker-6:
-    build:
-      context: ./config
-      dockerfile: Dockerfile
     image: apache_kafka_broker:latest
     container_name: broker-6
     ports:
