@@ -3,8 +3,8 @@ all:
     webservers:
       hosts:
         VM_1:
-          ansible_host: 67.17.206.202
+          ansible_host:
         VM_2:
-          ansible_host: 67.17.206.203
+          ansible_host:
         VM_3:
-          ansible_host: 67.17.206.222
+          ansible_host:
