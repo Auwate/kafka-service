@@ -122,7 +122,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-1
     ports:
       - 29092:9092
@@ -186,7 +186,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-2
     ports:
       - 29093:9092
@@ -250,7 +250,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-3
     ports:
       - 39092:9092
@@ -314,7 +314,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-4
     ports:
       - 39093:9092
@@ -378,7 +378,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-5
     ports:
       - 49092:9092
@@ -442,7 +442,7 @@ services:
     build:
       context: ./config
       dockerfile: Dockerfile
-    image: apache_kafka_broker
+    image: apache_kafka_broker:latest
     container_name: broker-6
     ports:
       - 49093:9092
