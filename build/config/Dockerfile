@@ -2,8 +2,12 @@ FROM apache/kafka:latest
 
 WORKDIR /opt/kafka
 
-COPY /config/dynamic-entrypoint.sh /opt/kafka/dynamic-entrypoint.sh
+USER root
+
+COPY dynamic-entrypoint.sh /opt/kafka/dynamic-entrypoint.sh
 RUN chmod +x /opt/kafka/dynamic-entrypoint.sh
+
+USER kafka
 
 ENTRYPOINT [ "/opt/kafka/dynamic-entrypoint.sh" ]
 
