@@ -22,6 +22,10 @@ This documentation is built for Unix operating systems. If you are using a Mac o
 
 Currently the setup does not use `Ansible` for automation, although this may change with future iterations. Thus, the following is manual setup.
 
+## Gathering dependencies:
+
+The application relies heavily on Docker, hence this application will require Docker to be installed on all VMs that will be used. You can find more information here: https://docs.docker.com/engine/install/
+
 ## Starting the swarm
 
 Firstly to get the service ready, we need to have all three VMs up and running using `Docker Swarm`. This is a native tool provided by Docker to distribute the load across multiple machines, providing built-in load balancing, redeployment, and networking.
@@ -34,122 +38,41 @@ Next, go into the other VMs and run `docker swarm join --token <ENTER_TOKEN_HERE
 
 Next, go back to the machine you initialized the swarm in and run `docker node promote <HOST_NAME_OR_NODE_ID>`, where you would put the host name or the ID of the node in `<HOST_NAME_OR_NODE_ID>`. This will promote each node into a hybrid, which essentially takes care of both managerial and labor-based tasks. You can find these attributes by running `docker node ls` in the first machine.
 
+## Labeling each node in the swarm
+
+After joining each node in the swarm, gather the hostname by using `docker node ls` and go into any node (as they are all hybrid managers) to run the following commands:
+
+```
+docker node update --label-add group=group1 <VM_1_HOST_NAME_OR_NODE_ID>
+docker node update --label-add group=group2 <VM_2_HOST_NAME_OR_NODE_ID>
+docker node update --label-add group=group3 <VM_3_HOST_NAME_OR_NODE_ID>
+```
+
+## Adding IP addresses as secrets
+
+`Docker Swarm` provides service called `secrets` which is a scalable way to share information between nodes to configure their containers. This application relies heavily on it to supply the IP addresses of each node. To get started, please find the IP addresses (or DNS addresses) for each VM in the swarm.
+
+Next, run the following commands:
+
+```
+echo -n group1_ip <IP_ADDRESS_OF_VM_1>
+echo -n group2_ip <IP_ADDRESS_OF_VM_2>
+echo -n group3_ip <IP_ADDRESS_OF_VM_3>
+```
+
+Then run the following commands to create the secrets:
+
+```
+docker secret create group1_ip group1_ip
+docker secret create group2_ip group2_ip
+docker secret create group3_ip group3_ip
+```
+
 ## Deploying the stack
 
 After getting the swarm up and running, please clone the repository (if you haven't already) into any of the machines and move the current working directory into the `/build` section. Then, run `docker stack deploy -c docker-compose.yaml kafka`. This will launch the stack and deploy the containers across each VM.
 
-# OLD DOCUMENTATION
-
-Below is old documentation, specifically before the usage of Docker Swarm
-
-# Setup
-
-To setup the application, please clone this repository and following the following code. It's setup for the usage of `Ansible`.
-
-```
-python3 -m venv kafka_venv
-
-source kafka_venv/bin/activate
-
-pip install -r kafka_service/requirements.txt
-```
-
-Then, please `chdir` into `kafka_service/ansible` and run the following code. It's the Ansible playbook for bootstrapping dependencies and running `Docker Compose`:
-
-```
-ansible-playbook playbooks/setup_kafka/playbook.yaml
-```
-
-# Setup Issues
-
-The `Ansible` playbook uses several commands to setup the cluster. Here are the following possible issues:
-
-## - cURL not present
-
-If `cURL` is not present on the machine you are working on, please install it on your machine using:
-
-```
-{sudo} apt update
-{sudo} apt install curl
-```
-
-## - Docker Compose not present
-
-If `Docker Compose` is not present on the machine you are working on, please install it using official documentation:
-
-**Debian**:
-
-- Docker Compose & Engine: https://docs.docker.com/engine/install/debian/
-
-**Ubuntu**:
-
-- Docker Compose & Engine: https://docs.docker.com/engine/install/ubuntu/
-
-## - Ansible: "Illegal instruction"
-
-Previous development have shown "Illegal instruction" output whenever using Ansible on certain systems. If it does, please try the following:
-
-### 1: Ensure you pip install the requirements.txt file
-
-If you installed Ansible directly through:
-
-```
-pip install ansible
-```
-
-Then please try the following:
-
-```
-pip uninstall ansible
-
-pip install -r requirements.txt --no-cache
-```
-
-### 2: Check with system adminstrator
-
-The VM this was developed on may have used a different architecture (such as a different CPU) than what is available. If that is the case, please check with the system adminstrator and downgrade the version as needed.
-
-# Kafka
-
-The deployment is made using `Docker Compose`, which is a simple way to deploy applications with identical environments. It's an abstraction over Docker to provide some repeatable environment configurations.
-
-## - Docker
-
-### -- Deployment
-
-In case `Ansible` is not working, you can run the cluster using:
-
-```
-cd kafka_service/build
-
-docker compose up -d
-
-# If `docker compose` is not recognized, use docker-compose
-```
-
-### -- Teardown
-
-To teardown the application, use:
-
-```
-docker compose down
-```
-
-### -- Monitoring
-
-To monitor the cluster, use:
-
-```
-docker ps -a
-```
-
-### -- Maintenance
-
-To apply maintenance or run commands on the individual containers, use:
-
-```
-docker exec -it {CONTAINER_NAME} /bin/bash
-```
+# Dev Commands
 
 ## - Apache Kafka Commands
 

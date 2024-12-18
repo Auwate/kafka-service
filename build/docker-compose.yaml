@@ -13,6 +13,14 @@
 #   broker-5-volume:
 #   broker-6-volume:
 
+secrets:
+  group1_ip:
+    external: true
+  group2_ip:
+    external: true
+  group3_ip:
+    external: true
+
 networks:
   network:
     driver: overlay
@@ -45,8 +53,8 @@ services:
     #  - controller-1-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group1
+        constraints:
+          - node.labels.group == group1
     networks:
       - network
 
@@ -79,8 +87,8 @@ services:
       - controller-1
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group2
+        constraints:
+          - node.labels.group == group2
     networks:
       - network
 
@@ -113,27 +121,28 @@ services:
       - controller-2
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group3
+        constraints:
+          - node.labels.group == group3
     networks:
       - network
 
   broker-1:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-1
     ports:
       - 29092:9092
+    secrets:
+      - group1_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-1:19092,PLAINTEXT_HOST://`cat /run/secrets/group1_ip`:29092" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 5
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 29092
-      KAFKA_CONTAINER_NAME: broker-1
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-1:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -174,27 +183,28 @@ services:
     #  - broker-1-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group1
+        constraints:
+          - node.labels.group == group1
     networks:
       - network
 
   broker-2:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-2
     ports:
       - 29093:9092
+    secrets:
+      - group1_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-2:19092,PLAINTEXT_HOST://`cat /run/secrets/group1_ip`:29093" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 6
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 29093
-      KAFKA_CONTAINER_NAME: broker-2
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-2:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -235,27 +245,28 @@ services:
     #  - broker-2-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group1
+        constraints:
+          - node.labels.group == group1
     networks:
       - network
 
   broker-3:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-3
     ports:
       - 39092:9092
+    secrets:
+      - group2_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-3:19092,PLAINTEXT_HOST://`cat /run/secrets/group2_ip`:39092" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 7
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 39092
-      KAFKA_CONTAINER_NAME: broker-3
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-3:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -296,27 +307,28 @@ services:
     #  - broker-3-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group2
+        constraints:
+          - node.labels.group == group2
     networks:
       - network
 
   broker-4:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-4
     ports:
       - 39093:9092
+    secrets:
+      - group2_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-4:19092,PLAINTEXT_HOST://`cat /run/secrets/group2_ip`:39093" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 8
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 39093
-      KAFKA_CONTAINER_NAME: broker-4
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-4:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -357,27 +369,28 @@ services:
     #  - broker-4-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group2
+        constraints:
+          - node.labels.group == group2
     networks:
       - network
 
   broker-5:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-5
     ports:
       - 49092:9092
+    secrets:
+      - group3_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-5:19092,PLAINTEXT_HOST://`cat /run/secrets/group3_ip`:49092" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 9
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 49092
-      KAFKA_CONTAINER_NAME: broker-5
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-5:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -418,27 +431,28 @@ services:
     #  - broker-5-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group3
+        constraints:
+          - node.labels.group == group3
     networks:
       - network
 
   broker-6:
-    image: apache_kafka_broker:latest
+    image: apache/kafka:latest
     container_name: broker-6
     ports:
       - 49093:9092
+    secrets:
+      - group3_ip
+    command: >
+      /bin/bash 
+      -c 
+      'export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://broker-6:19092,PLAINTEXT_HOST://`cat /run/secrets/group3_ip`:49093" && /etc/kafka/docker/run'
     environment:
 
       # Base configurations
       KAFKA_NODE_ID: 10
       KAFKA_PROCESS_ROLES: broker
       KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
-
-      # The advertised listeners will be dynamically assigned based on swarm placement
-      KAFKA_PORT: 49093
-      KAFKA_CONTAINER_NAME: broker-6
-      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker-6:19092
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
@@ -479,7 +493,7 @@ services:
     #  - broker-6-volume:/var/lib/kafka/data
     deploy:
       placement:
-        preferences:
-          - spread: node.labels.group3
+        constraints:
+          - node.labels.group == group3
     networks:
       - network

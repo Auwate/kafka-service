@@ -1,3 +1,7 @@
+# 12/18/2024
+
+- Fixed Docker Swarm bugs regarding connectivity
+
 # 12/11/2024
 
 - Added Docker Swarm capabilities
