@@ -1,0 +1,10 @@
+all:
+  children:
+    webservers:
+      hosts:
+        VM_1:
+          ansible_host:
+        VM_2:
+          ansible_host:
+        VM_3:
+          ansible_host:
