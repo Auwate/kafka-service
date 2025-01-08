@@ -55,9 +55,9 @@ docker node update --label-add group=group3 <VM_3_HOST_NAME_OR_NODE_ID>
 Next, run the following commands:
 
 ```
-echo -n "<IP_ADDRESS_OF_VM_1>" group1_ip
-echo -n "<IP_ADDRESS_OF_VM_2>" group2_ip
-echo -n "<IP_ADDRESS_OF_VM_3>" group3_ip
+echo -n "<IP_ADDRESS_OF_VM_1>" >> group1_ip
+echo -n "<IP_ADDRESS_OF_VM_2>" >> group2_ip
+echo -n "<IP_ADDRESS_OF_VM_3>" >> group3_ip
 ```
 
 Then run the following commands to create the secrets:
