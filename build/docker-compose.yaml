@@ -1,17 +1,17 @@
-# Why are the Volumes commented out?
-#   Because of Docker Swarm's inherent need of distributed data, it presented challenges that we're too resource intensive to justify.
-#   In addition, Kafka has application-level recovery strategies in place.
+# How will volumes work?
+  # Because the containers are tightly-coupled to the VM they are deployed on (meaning they cannot be deployed on another VM),
+  # their volume can be hold locally on that VM. 
 
-# volumes:
-#   controller-1-volume:
-#   controller-2-volume:
-#   controller-3-volume:
-#   broker-1-volume:
-#   broker-2-volume:
-#   broker-3-volume:
-#   broker-4-volume:
-#   broker-5-volume:
-#   broker-6-volume:
+volumes:
+  controller-1-volume:
+  controller-2-volume:
+  controller-3-volume:
+  broker-1-volume:
+  broker-2-volume:
+  broker-3-volume:
+  broker-4-volume:
+  broker-5-volume:
+  broker-6-volume:
 
 secrets:
   group1_ip:
@@ -49,8 +49,8 @@ services:
       start_period: 40s
       timeout: 30s
     restart: on-failure:3
-    #volumes:
-    #  - controller-1-volume:/var/lib/kafka/data
+    volumes:
+     - controller-1-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -81,8 +81,8 @@ services:
       start_period: 40s
       timeout: 30s
     restart: on-failure:3
-    #volumes:
-    #  - controller-2-volume:/var/lib/kafka/data
+    volumes:
+     - controller-2-volume:/var/lib/kafka/data
     depends_on:
       - controller-1
     deploy:
@@ -115,8 +115,8 @@ services:
       start_period: 40s
       timeout: 30s
     restart: on-failure:3
-    #volumes:
-    #  - controller-3-volume:/var/lib/kafka/data
+    volumes:
+     - controller-3-volume:/var/lib/kafka/data
     depends_on:
       - controller-2
     deploy:
@@ -166,7 +166,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -179,8 +178,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-1-volume:/var/lib/kafka/data
+    volumes:
+     - broker-1-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -228,7 +227,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -241,8 +239,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-2-volume:/var/lib/kafka/data
+    volumes:
+     - broker-2-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -290,7 +288,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -303,8 +300,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-3-volume:/var/lib/kafka/data
+    volumes:
+     - broker-3-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -352,7 +349,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -365,8 +361,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-4-volume:/var/lib/kafka/data
+    volumes:
+     - broker-4-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -414,7 +410,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -427,8 +422,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-5-volume:/var/lib/kafka/data
+    volumes:
+     - broker-5-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
@@ -476,7 +471,6 @@ services:
       KAFKA_MIN_INSYNC_REPLICAS: 2
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
 
-    # The healthcheck will try and list all topics available. This will actively check the connection between it and all the other nodes.
     healthcheck:
       test: ["CMD", "./opt/kafka/bin/kafka-configs.sh", "--bootstrap-server", "localhost:9093", "--version"]
       interval: 60s
@@ -489,8 +483,8 @@ services:
       - controller-1
       - controller-2
       - controller-3
-    #volumes:
-    #  - broker-6-volume:/var/lib/kafka/data
+    volumes:
+     - broker-6-volume:/var/lib/kafka/data
     deploy:
       placement:
         constraints:
