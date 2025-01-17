@@ -12,12 +12,12 @@ async def consume(index: int):
     """
     consumer = AIOKafkaConsumer(
         bootstrap_servers=[
-            "170.39.8.67:29092",
-            "170.39.8.67:29093",
-            "170.39.8.68:39092",
-            "170.39.8.68:39093",
-            "170.39.8.69:49092",
-            "170.39.8.69:49093",
+            "kafka-server1.amlight.net:29092",
+            "kafka-server1.amlight.net:29093",
+            "kafka-server2.amlight.net:39092",
+            "kafka-server2.amlight.net:39093",
+            "kafka-server3.amlight.net:49092",
+            "kafka-server3.amlight.net:49093",
         ],
         group_id="test_group",
         enable_auto_commit=True,
