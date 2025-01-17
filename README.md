@@ -80,7 +80,7 @@ The following are commands you can use inside each Kafka container. It's importa
 
 **WARNING**
 
-If you look online, there may be examples of different commands not listed here using `--bootstrap-server=localhost:9092`. For our cluster, this will not work for reasons outside of the scope of this README, but to get it to work use `--boostrap-server=localhost:19092`.
+If you look online, there may be examples of different commands not listed here using `--bootstrap-server=localhost:9092`. For our cluster, this will not work for reasons outside of the scope of this README, but to get it to work use the IP address of the VM you are on, followed by the IP the Kafka cluster advertises on, such as: `--boostrap-server=192.108.0.109:29093`.
 
 To begin, please run:
 
@@ -101,7 +101,7 @@ The `kafka-topics.sh` command is used to manage Kafka topics. You can create, li
 - **Create a topic**:
 
     ```
-    ./kafka-topics.sh --create --topic my_topic --bootstrap-server localhost:19092 --partitions 3 --replication-factor 1
+    ./kafka-topics.sh --create --topic my_topic --bootstrap-server <IP_ADDR>:29092 --partitions 3 --replication-factor 1
     ```
 
     This creates a topic called `my_topic` with 3 partitions and a replication factor of 1.
@@ -109,7 +109,7 @@ The `kafka-topics.sh` command is used to manage Kafka topics. You can create, li
 - **List topics**:
 
     ```
-    ./kafka-topics.sh --list --bootstrap-server localhost:19092
+    ./kafka-topics.sh --list --bootstrap-server <IP_ADDR>:29092
     ```
 
     This lists all Kafka topics in the cluster.
@@ -117,7 +117,7 @@ The `kafka-topics.sh` command is used to manage Kafka topics. You can create, li
 - **Describe a topic**:
 
     ```
-    ./kafka-topics.sh --describe --topic my_topic --bootstrap-server localhost:19092
+    ./kafka-topics.sh --describe --topic my_topic --bootstrap-server <IP_ADDR>:29092
     ```
 
     This shows detailed information about the `my_topic`, such as partitions and replication.
@@ -133,7 +133,7 @@ The `kafka-console-producer.sh` command allows you to send messages to a Kafka t
 - **Produce messages to a topic**:
 
     ```
-    ./kafka-console-producer.sh --topic my_topic --bootstrap-server localhost:19092
+    ./kafka-console-producer.sh --topic my_topic --bootstrap-server <IP_ADDR>:29092
     ```
 
     After running this command, you can type messages, and they will be sent to the `my_topic` topic.
@@ -149,7 +149,7 @@ The `kafka-console-consumer.sh` command is used to consume messages from a Kafka
 - **Consume messages from a topic**:
 
     ```
-    ./kafka-console-consumer.sh --topic my_topic --bootstrap-server localhost:19092 --from-beginning
+    ./kafka-console-consumer.sh --topic my_topic --bootstrap-server <IP_ADDR>:29092 --from-beginning
     ```
 
     This will read all messages from the `my_topic` starting from the beginning.
@@ -157,7 +157,7 @@ The `kafka-console-consumer.sh` command is used to consume messages from a Kafka
 - **Consume messages from a specific partition**:
 
     ```
-    ./kafka-console-consumer.sh --topic my_topic --partition 0 --offset 10 --bootstrap-server localhost:19092
+    ./kafka-console-consumer.sh --topic my_topic --partition 0 --offset 10 --bootstrap-server <IP_ADDR>:29092
     ```
 
     This starts consuming from partition 0, beginning at offset 10.
@@ -173,7 +173,7 @@ The `kafka-consumer-groups.sh` command is used to view and manage consumer group
 - **List all consumer groups**:
 
     ```
-    ./kafka-consumer-groups.sh --list --bootstrap-server localhost:19092
+    ./kafka-consumer-groups.sh --list --bootstrap-server <IP_ADDR>:29092
     ```
 
     This command lists all the consumer groups that are currently registered with the Kafka broker.
@@ -181,7 +181,7 @@ The `kafka-consumer-groups.sh` command is used to view and manage consumer group
 - **Describe a consumer group**:
 
     ```
-    ./kafka-consumer-groups.sh --describe --group my_group --bootstrap-server localhost:19092
+    ./kafka-consumer-groups.sh --describe --group my_group --bootstrap-server <IP_ADDR>:29092
     ```
 
     This provides information on the consumer group `my_group`, such as the offsets and lag for each partition.
@@ -196,7 +196,7 @@ The `kafka-broker-api-versions.sh` command is used to display the supported API 
 - **Check broker API versions**:
     
     ```
-    ./kafka-broker-api-versions.sh --bootstrap-server localhost:19092
+    ./kafka-broker-api-versions.sh --bootstrap-server <IP_ADDR>:29092
     ```
 
     This shows the available API versions on the Kafka broker at the specified address.
@@ -212,7 +212,7 @@ The `kafka-replica-verification.sh` script is used to verify the replication sta
 - **Verify replica status**:
 
     ```
-    ./kafka-replica-verification.sh --bootstrap-server localhost:19092
+    ./kafka-replica-verification.sh --bootstrap-server <IP_ADDR>:29092
     ```
 
     This checks the status of replicas across topics and identifies any issues with replication.

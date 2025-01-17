@@ -1,3 +1,9 @@
+# 01/17/2024
+
+- Added volumes back to the Docker Compose file
+    - Was fixed due to strongly coupling Kafka placements to specific VMs
+- Added sample consumers, producers, encoders, and classes
+
 # 12/18/2024
 
 - Fixed Docker Swarm bugs regarding connectivity
