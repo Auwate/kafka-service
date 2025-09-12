@@ -27,9 +27,16 @@ services:
 
       # Consumer policies
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Security configs
+      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
+
     restart: on-failure:3
     volumes:
      - controller-1-volume:/var/lib/kafka/data
+     - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro
 
   controller-2:
     image: apache/kafka:4.0.0
@@ -47,9 +54,16 @@ services:
 
       # Consumer policies
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Security configs
+      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
+
     restart: on-failure:3
     volumes:
      - controller-2-volume:/var/lib/kafka/data
+     - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro
 
   controller-3:
     image: apache/kafka:4.0.0
@@ -67,9 +81,16 @@ services:
 
       # Consumer policies
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      # Security configs
+      KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
+
     restart: on-failure:3
     volumes:
      - controller-3-volume:/var/lib/kafka/data
+     - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro
 
   broker-1:
     image: apache/kafka:4.0.0
@@ -115,7 +136,7 @@ services:
       # Authorization
       KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "false"
-      KAFKA_SUPER_USERS: User:admin
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
 
       # JAAS Configuration
       KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_jaas.conf"
@@ -126,6 +147,7 @@ services:
     volumes:
      - broker-1-volume:/var/lib/kafka/data
      - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro # <- Mounts the JAAS
+     - ./admin.properties:/tmp/admin.properties
 
   broker-2:
     image: apache/kafka:4.0.0
@@ -171,7 +193,7 @@ services:
       # Authorization
       KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "false"
-      KAFKA_SUPER_USERS: User:admin
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
 
       # JAAS Configuration
       KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_jaas.conf"
@@ -182,6 +204,7 @@ services:
     volumes:
      - broker-2-volume:/var/lib/kafka/data
      - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro # <- Mounts the JAAS
+     - ./admin.properties:/tmp/admin.properties
 
   broker-3:
     image: apache/kafka:4.0.0
@@ -227,7 +250,7 @@ services:
       # Authorization
       KAFKA_AUTHORIZER_CLASS_NAME: org.apache.kafka.metadata.authorizer.StandardAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "false"
-      KAFKA_SUPER_USERS: User:admin
+      KAFKA_SUPER_USERS: User:admin;User:ANONYMOUS
 
       # JAAS Configuration
       KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/kafka_jaas.conf"
@@ -240,3 +263,4 @@ services:
     volumes:
      - broker-3-volume:/var/lib/kafka/data
      - ./kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro # <- Mounts the JAAS
+     - ./admin.properties:/tmp/admin.properties

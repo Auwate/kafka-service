@@ -24,10 +24,10 @@ async def collectMetrics():
 
     aio_producer = AIOKafkaProducer(
             bootstrap_servers='localhost:29092',
-            # security_protocol='SASL_PLAINTEXT',
-            # sasl_mechanism='SCRAM-SHA-512',
-            # sasl_plain_username='test-user',
-            # sasl_plain_password='password'
+            security_protocol='SASL_PLAINTEXT',
+            sasl_mechanism='SCRAM-SHA-512',
+            sasl_plain_username='USERNAME_HERE',
+            sasl_plain_password='PASSWORD_HERE'
     )
 
     print("Awaiting producer")
